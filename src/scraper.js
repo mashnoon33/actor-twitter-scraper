@@ -37,7 +37,7 @@ module.exports = {
                         console.log(`user = ${user.screen_name}`);
                         console.log(`user = ${user.name}`);
                         console.log(`handle = ${handle}`);
-                        if (user.screen_name == handle) {
+                        if (user.screen_name.toLowerCase() == handle.toLowerCase()) {
                             output.user.name = user.name;
                             output.user.description = user.description;
                             output.user.location = user.location;
@@ -82,7 +82,7 @@ module.exports = {
                         const data = await response.json();
                         Object.keys(data.globalObjects.users).forEach((key) => {
                             const user = data.globalObjects.users[key];
-                            if (user.screen_name == handle) {
+                            if (user.screen_name.toLowerCase() == handle.toLowerCase()) {
                                 resolve({
                                     name: user.name,
                                     description:user.description,
