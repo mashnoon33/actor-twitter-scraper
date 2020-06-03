@@ -9,7 +9,7 @@ module.exports = {
 
         const SCROLL_DURATION = 0;
         const page = await browser.newPage();
-        await page.setDefaultNavigationTimeout(300000);
+        await page.setDefaultNavigationTimeout(60000);
         console.log(`calling ${handle}`)
         await page.goto(`https://twitter.com/${handle}/with_replies`);
 
