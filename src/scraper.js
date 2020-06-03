@@ -7,10 +7,10 @@ module.exports = {
 
     getActivity: async function({browser, handle, tweetCount}) {
 
+        console.log(`calling ${handle}`)
         const SCROLL_DURATION = 0;
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(60000);
-        console.log(`calling ${handle}`)
         await page.goto(`https://twitter.com/${handle}/with_replies`);
 
         var output = {user: {}, tweets: []};
@@ -46,6 +46,7 @@ module.exports = {
                         }
                     })
                 } catch(err) {
+                    console.log(`Error in response json ${response.url()} ${response.status()} ${response.text()}`)
                     console.log(err)
                 }
             }
