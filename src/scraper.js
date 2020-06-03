@@ -12,8 +12,10 @@ module.exports = {
         await page.setDefaultNavigationTimeout(0);
 
         try{
+          console.log(`calling ${handle}`)
           await page.goto(`https://twitter.com/${handle}/with_replies`);
         } catch(err) {
+          console.log(`${handle} error`)
           console.log(err)
         }
 
