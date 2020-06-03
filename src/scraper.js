@@ -14,12 +14,12 @@ module.exports = {
         var output = {user: {}, tweets: []};
 
         page.on('response', async (response) => {
-            console.log(`Response = ${JSON.stringify(response)}`);
+            console.log(`Response = ${response}`);
             console.log(`Response.url() = ${response.url()}`);
             if (response.url().includes('/timeline/profile/')) {
                 try {
                     const data = await response.json();
-                    console.log(`Data = ${JSON.stringify(data)}`);
+                    console.log(`Data = ${data}`);
                     Object.keys(data.globalObjects.tweets).forEach((key) => {
                         const tweet = data.globalObjects.tweets[key];
                         output.tweets.push({
@@ -34,7 +34,8 @@ module.exports = {
                     })
                     Object.keys(data.globalObjects.users).forEach((key) => {
                         const user = data.globalObjects.users[key];
-                        console.log(`user = ${JSON.stringify(user)}`);
+                        console.log(`user = ${user.screen_name}`);
+                        console.log(`user = ${user.name}`);
                         console.log(`handle = ${handle}`);
                         if (user.screen_name == handle) {
                             output.user.name = user.name;
@@ -45,7 +46,7 @@ module.exports = {
                         }
                     })
                 } catch(err) {
-                    //console.log(err)
+                    console.log(err)
                 }
             }
         });
