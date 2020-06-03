@@ -11,7 +11,7 @@ module.exports = {
         const SCROLL_DURATION = 0;
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(60000);
-        await page.goto(`https://twitter.com/${handle}/with_replies`);
+        await page.goto(`https://twitter.com/${handle}/with_replies`).catch(e => console.log(`GOTO ERR ${e}`));
 
         var output = {user: {}, tweets: []};
 
