@@ -43,7 +43,7 @@ module.exports = {
             await page.evaluate(async () => {
                 let delta = document.body.scrollHeight === 0 ? 10000 : document.body.scrollHeight // in case scrollHeight fixed to 0
                 window.scrollBy(0, delta);
-            }).catch(e => console.log(`scroll ERR ${e}`));
+            });
             if (finished) {
                 break;
             }
