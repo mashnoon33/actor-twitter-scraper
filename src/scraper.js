@@ -8,7 +8,7 @@ module.exports = {
     getActivity: async function({browser, handle, tweetCount}) {
 
         console.log(`calling ${handle}`)
-        const SCROLL_DURATION = 0;
+        const SCROLL_DURATION = 60000;
         const page = await browser.newPage().catch(e => console.log(`newPage ERR ${e}`));
         await page.setDefaultNavigationTimeout(60000);
         await page.goto(`https://twitter.com/${handle}/with_replies`).catch(e => console.log(`GOTO ERR ${e}`));
@@ -52,7 +52,9 @@ module.exports = {
             }
         });
 
+        console.log("scroll start")
         infiniteScroll(page, SCROLL_DURATION);
+        console.log("scroll end")
 
         // scraped desired number of tweets
         do {
