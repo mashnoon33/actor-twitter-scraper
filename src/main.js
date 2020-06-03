@@ -17,7 +17,7 @@ Apify.main(async () => {
             handle,
             tweetCount: input.tweetsDesired,
         }
-        requestQueue.push(scraper.getActivity(scraperOpts));
+        requestQueue.push(scraper.getActivity(scraperOpts).catch(e => e));
     }
 
     console.log("Starting scraping jobs...")
@@ -27,5 +27,5 @@ Apify.main(async () => {
       console.log(result)
       return result
     })
-    .catch(error => console.log(`Error in promises ${error}`))
+    .catch(error => console.log(`Error in executing ${error}`))
 })
