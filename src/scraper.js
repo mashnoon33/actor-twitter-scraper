@@ -9,17 +9,15 @@ module.exports = {
 
         const SCROLL_DURATION = 0;
         const page = await browser.newPage();
+        await page.setDefaultNavigationTimeout(0);
         await page.goto(`https://twitter.com/${handle}/with_replies`);
 
         var output = {user: {}, tweets: []};
 
         page.on('response', async (response) => {
-            console.log(`Response = ${response}`);
-            console.log(`Response.url() = ${response.url()}`);
             if (response.url().includes('/timeline/profile/')) {
                 try {
                     const data = await response.json();
-                    console.log(`Data = ${data}`);
                     Object.keys(data.globalObjects.tweets).forEach((key) => {
                         const tweet = data.globalObjects.tweets[key];
                         output.tweets.push({
@@ -34,9 +32,6 @@ module.exports = {
                     })
                     Object.keys(data.globalObjects.users).forEach((key) => {
                         const user = data.globalObjects.users[key];
-                        console.log(`user = ${user.screen_name}`);
-                        console.log(`user = ${user.name}`);
-                        console.log(`handle = ${handle}`);
                         if (user.screen_name.toLowerCase() == handle.toLowerCase()) {
                             output.user.name = user.name;
                             output.user.description = user.description;
