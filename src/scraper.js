@@ -10,7 +10,12 @@ module.exports = {
         const SCROLL_DURATION = 0;
         const page = await browser.newPage();
         await page.setDefaultNavigationTimeout(0);
-        await page.goto(`https://twitter.com/${handle}/with_replies`);
+
+        try{
+          await page.goto(`https://twitter.com/${handle}/with_replies`);
+        } catch(err) {
+          console.log(err)
+        }
 
         var output = {user: {}, tweets: []};
 
