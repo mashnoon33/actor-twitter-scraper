@@ -21,10 +21,5 @@ Apify.main(async () => {
     }
 
     console.log("Starting scraping jobs...")
-    try {
-        return await Promise.all(requestQueue)
-    } catch (err) {
-        console.log("main js crash")
-        console.log(err)
-    }
+    return await Promise.all(requestQueue)
 })
