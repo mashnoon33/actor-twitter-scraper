@@ -19,23 +19,22 @@ Apify.main(async () => {
             tweetCount: input.tweetsDesired,
         }
         requestQueue.push(scraper.getActivity(scraperOpts).catch(e => console.log(`ERR ${e}`)));
-        if (i % 2 === 0) {
+        if (i % 10 === 0) {
           console.log(i);
           console.log(requestQueue.length)
           await Promise.all(requestQueue)
           .then(result => {
             console.log(result)
-            //return result
           })
           .catch(error => console.log(`Error in executing ${error}`))
         }
     }
 
     // return await Promise.all(requestQueue)
-    // await Promise.all(requestQueue)
-    // .then(result => {
-    //   console.log(result)
-    //   return result
-    // })
-    // .catch(error => console.log(`Error in executing ${error}`))
+    // Remaining queue
+    await Promise.all(requestQueue)
+    .then(result => {
+      console.log(result)
+    })
+    .catch(error => console.log(`Error in executing ${error}`))
 })

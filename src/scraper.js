@@ -52,9 +52,7 @@ module.exports = {
             }
         });
 
-        console.log("scroll start")
         infiniteScroll(page, SCROLL_DURATION);
-        console.log("scroll end")
 
         // scraped desired number of tweets
         do {
