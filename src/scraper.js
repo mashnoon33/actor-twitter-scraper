@@ -9,7 +9,7 @@ module.exports = {
 
         console.log(`calling ${handle}`)
         const SCROLL_DURATION = 0;
-        const page = await browser.newPage();
+        const page = await browser.newPage().catch(e => console.log(`newPage ERR ${e}`));
         await page.setDefaultNavigationTimeout(60000);
         await page.goto(`https://twitter.com/${handle}/with_replies`).catch(e => console.log(`GOTO ERR ${e}`));
 
@@ -60,7 +60,7 @@ module.exports = {
             if (oldOutputLength > 0) {
                 console.log(`Scraped ${oldOutputLength} ${handle}'s tweets...`)
             }
-            await new Promise(resolve => setTimeout(resolve, 20000, reject=> console.log("reject")))
+            await new Promise(resolve => setTimeout(resolve, 20000))
         } while (output.tweets.length < tweetCount && output.tweets.length > oldOutputLength)
 
         // truncate overflow output due to high SCROLL_DURATION
