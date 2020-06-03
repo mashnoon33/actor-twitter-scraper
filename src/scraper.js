@@ -16,7 +16,7 @@ module.exports = {
         var output = {user: {}, tweets: []};
 
         page.on('error', async (err) => {
-          console.log(`Error ${handle}`)
+          console.log(`Error ${handle} ${page.url()} ${err.toString()}`)
         })
 
         page.on('response', async (response) => {
@@ -59,7 +59,7 @@ module.exports = {
             if (oldOutputLength > 0) {
                 console.log(`Scraped ${oldOutputLength} ${handle}'s tweets...`)
             }
-            await new Promise(resolve => setTimeout(resolve, 20000))
+            await new Promise(resolve => setTimeout(resolve, 20000, reject=> console.log("reject")))
         } while (output.tweets.length < tweetCount && output.tweets.length > oldOutputLength)
 
         // truncate overflow output due to high SCROLL_DURATION
