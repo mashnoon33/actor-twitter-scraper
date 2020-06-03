@@ -22,7 +22,7 @@ Apify.main(async () => {
 
     console.log("Starting scraping jobs...")
     //return await Promise.all(requestQueue)
-    Promise.all(requestQueue)
+    await Promise.all(requestQueue)
     .then(result => {
       console.log(result)
       return result
