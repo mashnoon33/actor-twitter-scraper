@@ -10,6 +10,7 @@ Apify.main(async () => {
     await page.setCookie(...input.initialCookies);
     let requestQueue = [];
 
+    console.log("Starting scraping jobs...")
     for (var i = 0, n = input.handle.length; i < n; i++) {
         const handle = input.handle[i];
         const scraperOpts = {
@@ -18,30 +19,17 @@ Apify.main(async () => {
             tweetCount: input.tweetsDesired,
         }
         requestQueue.push(scraper.getActivity(scraperOpts).catch(e => console.log(`ERR ${e}`)));
+        if (i % 2 === 0) {
+          console.log(i);
+          console.log(requestQueue.length)
+          await Promise.all(requestQueue)
+          .then(result => {
+            console.log(result)
+            //return result
+          })
+          .catch(error => console.log(`Error in executing ${error}`))
+        }
     }
-
-    console.log("Starting scraping jobs...")
-
-    function parallelLimit(promiseFactories, limit) {
-      let result = [];
-      let cnt = 0;
-      function chain(promiseFactories) {
-        if(!promiseFactories.length) return;
-        let i = cnt++; // preserve order in result
-        return promiseFactories.shift()().then((res) => {
-          result[i] = res; // save result
-          return chain(promiseFactories); // append next promise
-        });
-      }
-      let arrChains = [];
-      while(limit-- > 0 && promiseFactories.length > 0) {
-        // create `limit` chains which run in parallel
-        arrChains.push(chain(promiseFactories));
-      }
-      // return when all arrChains are finished
-      return Promise.all(arrChains).then(() => result);
-    }
-    parallelLimit(requestQueue, 4).then(console.log);
 
     // return await Promise.all(requestQueue)
     // await Promise.all(requestQueue)
