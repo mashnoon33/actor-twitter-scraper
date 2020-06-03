@@ -19,7 +19,7 @@ Apify.main(async () => {
             tweetCount: input.tweetsDesired,
         }
         requestQueue.push(scraper.getActivity(scraperOpts).catch(e => console.log(`ERR ${e}`)));
-        if (i % 20 === 0) {
+        if (i % 10 === 0) {
           console.log(i);
           await Promise.all(requestQueue)
           .then(result => {
