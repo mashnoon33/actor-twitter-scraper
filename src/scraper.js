@@ -21,6 +21,11 @@ module.exports = {
 
         var output = {user: {}, tweets: []};
 
+        page.on('error', async (err) => {
+          console.log("Error handler")
+          console.log(err)
+        })
+
         page.on('response', async (response) => {
             if (response.url().includes('/timeline/profile/')) {
                 try {
