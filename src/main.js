@@ -21,11 +21,33 @@ Apify.main(async () => {
     }
 
     console.log("Starting scraping jobs...")
-    //return await Promise.all(requestQueue)
-    await Promise.all(requestQueue)
-    .then(result => {
-      console.log(result)
-      return result
-    })
-    .catch(error => console.log(`Error in executing ${error}`))
+
+    function parallelLimit(promiseFactories, limit) {
+      let result = [];
+      let cnt = 0;
+      function chain(promiseFactories) {
+        if(!promiseFactories.length) return;
+        let i = cnt++; // preserve order in result
+        return promiseFactories.shift()().then((res) => {
+          result[i] = res; // save result
+          return chain(promiseFactories); // append next promise
+        });
+      }
+      let arrChains = [];
+      while(limit-- > 0 && promiseFactories.length > 0) {
+        // create `limit` chains which run in parallel
+        arrChains.push(chain(promiseFactories));
+      }
+      // return when all arrChains are finished
+      return Promise.all(arrChains).then(() => result);
+    }
+    parallelLimit(requestQueue, 4).then(console.log);
+
+    // return await Promise.all(requestQueue)
+    // await Promise.all(requestQueue)
+    // .then(result => {
+    //   console.log(result)
+    //   return result
+    // })
+    // .catch(error => console.log(`Error in executing ${error}`))
 })
