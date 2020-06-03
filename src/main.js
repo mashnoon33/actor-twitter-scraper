@@ -27,5 +27,5 @@ Apify.main(async () => {
       console.log(result)
       return result
     })
-    .catch(error => console.log(`Error in promises ${error}`)
+    .catch(error => console.log(`Error in promises ${error}`))
 })
